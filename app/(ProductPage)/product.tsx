@@ -13,16 +13,30 @@ const product = () => {
     passdesc: any,
     passprice: any
   ) => {
-    setCart((prevState) => [
-      ...prevState,
-      {
-        id: passid,
-        name: passname,
-        img: passimg,
-        desc: passdesc,
-        price: passprice,
-      },
-    ]);
+    let duplicate = false;
+    setCart((prevState) => {
+      prevState.map((el) => {
+        if (el.id === passid) {
+          duplicate = true;
+        }
+      });
+      if (duplicate) {
+        Alert.alert("Item already in the cart!");
+        return [...prevState];
+      } else {
+        Alert.alert("Item added successfully!");
+        return [
+          ...prevState,
+          {
+            id: passid,
+            name: passname,
+            img: passimg,
+            desc: passdesc,
+            price: passprice,
+          },
+        ];
+      }
+    });
     console.log(`${passid} ${passname} ${passimg} ${passdesc} ${passprice}`);
   };
   return (
