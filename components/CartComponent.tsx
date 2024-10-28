@@ -13,8 +13,10 @@ const CartComponent = ({
   return (
     <View className="rounded flex flex-row justify-between items-center h-40 pr-4 mb-4">
       <Image
-        className="w-24 object-cover rounded mb-2"
-        source={{ uri: `${img}` }}
+        className="w-28 h-28 object-cover rounded mb-2"
+        source={{
+          uri: img,
+        }}
       />
 
       <Text>{name}</Text>

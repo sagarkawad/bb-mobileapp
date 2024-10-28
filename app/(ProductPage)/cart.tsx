@@ -10,7 +10,7 @@ const cart = () => {
       {cart &&
         cart.map((el: { img: string; price: string; name: string }) => (
           <CartComponent
-            key={el.img}
+            key={el.name}
             img={el.img}
             price={el.price}
             name={el.name}

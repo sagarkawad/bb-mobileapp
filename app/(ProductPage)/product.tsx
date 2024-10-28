@@ -23,7 +23,7 @@ const product = () => {
         price: passprice,
       },
     ]);
-    Alert.alert(`${passdesc} ${passid} ${passimg} ${passname} ${passprice}`);
+    console.log(`${passid} ${passname} ${passimg} ${passdesc} ${passprice}`);
   };
   return (
     <View className="flex p-4 flex-col  h-full justify-between">
@@ -45,7 +45,7 @@ const product = () => {
         <View className="flex bg-blue-500 h-10 w-40 justify-center items-center rounded">
           <Text
             className="text-white"
-            onPress={() => handlePress(id, name, desc, img, price)}
+            onPress={() => handlePress(id, name, img, desc, price)}
           >
             Add to Cart!
           </Text>
