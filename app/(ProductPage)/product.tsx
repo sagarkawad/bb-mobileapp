@@ -33,6 +33,7 @@ const product = () => {
             img: passimg,
             desc: passdesc,
             price: passprice,
+            quan: 1,
           },
         ];
       }

@@ -6,6 +6,7 @@ interface CartItem {
   price: string;
   desc: string;
   img: string;
+  quan: number;
 }
 
 export const cartData = atom<CartItem[]>({
