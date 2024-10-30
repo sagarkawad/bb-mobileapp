@@ -26,6 +26,22 @@ export default function Layout() {
             headerBackTitle: "back",
           }}
         />
+        <Stack.Screen
+          name="(ProductPage)/order"
+          options={{
+            headerShown: true,
+            headerTitle: "Order",
+            headerBackTitle: "back",
+          }}
+        />
+        <Stack.Screen
+          name="(user)/signIn"
+          options={{
+            headerShown: true,
+            headerTitle: "Registration and Login",
+            headerBackTitle: "back",
+          }}
+        />
       </Stack>
     </RecoilRoot>
   );

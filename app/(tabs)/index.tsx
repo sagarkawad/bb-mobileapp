@@ -21,6 +21,9 @@ const index = () => {
           />
         );
       })}
+      <Link href="./users">
+        <Text>Go to Users</Text>
+      </Link>
     </ScrollView>
   );
 };
