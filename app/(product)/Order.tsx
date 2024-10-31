@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 
-const order = () => {
+const Order = () => {
   return (
     <View>
       <Text>Order Page</Text>
@@ -8,4 +8,4 @@ const order = () => {
   );
 };
 
-export default order;
+export default Order;

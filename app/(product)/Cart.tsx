@@ -5,7 +5,7 @@ import CartComponent from "@/components/CartComponent";
 import { Link } from "expo-router";
 import { useState } from "react";
 
-const cart = () => {
+const Cart = () => {
   const cart = useRecoilValue(cartData);
 
   return (
@@ -41,7 +41,7 @@ const cart = () => {
           </Text>
         </View>
         <View className="bg-blue-400 rounded flex items-center justify-center h-10">
-          <Link href="./order">
+          <Link href="./Order">
             <Text className="text-white">Proceed To Checkout</Text>
           </Link>
         </View>
@@ -50,4 +50,4 @@ const cart = () => {
   );
 };
 
-export default cart;
+export default Cart;

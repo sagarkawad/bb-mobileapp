@@ -5,7 +5,7 @@ import useWallpaper from "@/hooks/usePhotos";
 import usePhotos from "@/hooks/usePhotos";
 import { ThemedView } from "@/components/ThemedView";
 
-const index = () => {
+const Index = () => {
   const data = usePhotos();
   return (
     <ScrollView className="p-4">
@@ -21,11 +21,8 @@ const index = () => {
           />
         );
       })}
-      <Link href="./users">
-        <Text>Go to Users</Text>
-      </Link>
     </ScrollView>
   );
 };
 
-export default index;
+export default Index;

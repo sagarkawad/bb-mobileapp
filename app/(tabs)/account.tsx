@@ -1,11 +1,11 @@
 import { View, Text, Button, Alert } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, Link } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userData } from "@/atoms";
 import { useEffect, useState } from "react";
 
-const account = () => {
+const Account = () => {
   const router = useRouter();
   const [userDataSession, setUserDataSession] = useRecoilState(userData);
   const [loading, setLoading] = useState(true);
@@ -36,13 +36,27 @@ const account = () => {
     setUserDataSession({ id: null, email: null });
   };
 
+  const addresses = () => {
+    router.push("./../(user)/Address");
+  };
+
   return (
-    <View>
+    <View className="p-4">
       {loading ? (
         <Text>Loading...</Text>
       ) : (
         <>
-          <Text>Accounts Page</Text>
+          <Link href="./../(user)/Address">
+            <View className="h-16 border-b flex flex-row justify-between items-center p-4 mb-10 w-100">
+              <View>
+                <Text className="text-2xl">Addresses</Text>
+              </View>
+              <View>
+                <Text>{">"}</Text>
+              </View>
+            </View>
+          </Link>
+
           {userDataSession.id ? (
             <Text>You are signed in as: {userDataSession.email}</Text>
           ) : (
@@ -58,4 +72,4 @@ const account = () => {
   );
 };
 
-export default account;
+export default Account;

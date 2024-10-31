@@ -3,7 +3,7 @@ import { useLocalSearchParams, Link } from "expo-router";
 import { useRecoilState } from "recoil";
 import { cartData } from "@/atoms";
 
-const product = () => {
+const Product = () => {
   const { id, name, img, desc, price } = useLocalSearchParams();
   const [cart, setCart] = useRecoilState(cartData);
   const handlePress = (
@@ -53,7 +53,7 @@ const product = () => {
 
       <View className="flex flex-row justify-between items-center">
         <View className="flex bg-blue-500 h-10 w-40 justify-center items-center rounded">
-          <Link href="./cart">
+          <Link href="./Cart">
             <Text className="text-white">Go to Cart!</Text>
           </Link>
         </View>
@@ -70,4 +70,4 @@ const product = () => {
   );
 };
 
-export default product;
+export default Product;

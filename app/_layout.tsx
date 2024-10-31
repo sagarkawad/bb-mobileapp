@@ -11,7 +11,7 @@ export default function Layout() {
         }}
       >
         <Stack.Screen
-          name="(ProductPage)/product"
+          name="(product)/Product"
           options={{
             headerShown: true,
             headerTitle: "Product",
@@ -19,7 +19,7 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="(ProductPage)/cart"
+          name="(product)/Cart"
           options={{
             headerShown: true,
             headerTitle: "Cart",
@@ -27,7 +27,7 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="(ProductPage)/order"
+          name="(product)/Order"
           options={{
             headerShown: true,
             headerTitle: "Order",
@@ -35,10 +35,18 @@ export default function Layout() {
           }}
         />
         <Stack.Screen
-          name="(user)/signIn"
+          name="(user)/SignIn"
           options={{
             headerShown: true,
             headerTitle: "Registration and Login",
+            headerBackTitle: "back",
+          }}
+        />
+        <Stack.Screen
+          name="(user)/Address"
+          options={{
+            headerShown: true,
+            headerTitle: "Address",
             headerBackTitle: "back",
           }}
         />
