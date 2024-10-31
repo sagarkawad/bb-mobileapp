@@ -23,7 +23,7 @@ const Account = () => {
   }, []);
 
   const pushToSignIn = () => {
-    router.push("./../(user)/signIn");
+    router.push("./../(account)/signin");
   };
 
   const pushToSignOut = async () => {
@@ -36,18 +36,14 @@ const Account = () => {
     setUserDataSession({ id: null, email: null });
   };
 
-  const addresses = () => {
-    router.push("./../(user)/Address");
-  };
-
   return (
     <View className="p-4">
       {loading ? (
         <Text>Loading...</Text>
       ) : (
         <>
-          <Link href="./../(user)/Address">
-            <View className="h-16 border-b flex flex-row justify-between items-center p-4 mb-10 w-100">
+          <Link href="./../(account)/address" className="mb-10">
+            <View className="h-16 border-b flex flex-row items-center justify-between mb-10">
               <View>
                 <Text className="text-2xl">Addresses</Text>
               </View>

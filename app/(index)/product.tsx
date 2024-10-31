@@ -53,7 +53,7 @@ const Product = () => {
 
       <View className="flex flex-row justify-between items-center">
         <View className="flex bg-blue-500 h-10 w-40 justify-center items-center rounded">
-          <Link href="./Cart">
+          <Link href="./cart">
             <Text className="text-white">Go to Cart!</Text>
           </Link>
         </View>

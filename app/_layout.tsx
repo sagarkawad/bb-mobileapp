@@ -10,46 +10,9 @@ export default function Layout() {
           headerShown: false,
         }}
       >
-        <Stack.Screen
-          name="(product)/Product"
-          options={{
-            headerShown: true,
-            headerTitle: "Product",
-            headerBackTitle: "back",
-          }}
-        />
-        <Stack.Screen
-          name="(product)/Cart"
-          options={{
-            headerShown: true,
-            headerTitle: "Cart",
-            headerBackTitle: "back",
-          }}
-        />
-        <Stack.Screen
-          name="(product)/Order"
-          options={{
-            headerShown: true,
-            headerTitle: "Order",
-            headerBackTitle: "back",
-          }}
-        />
-        <Stack.Screen
-          name="(user)/SignIn"
-          options={{
-            headerShown: true,
-            headerTitle: "Registration and Login",
-            headerBackTitle: "back",
-          }}
-        />
-        <Stack.Screen
-          name="(user)/Address"
-          options={{
-            headerShown: true,
-            headerTitle: "Address",
-            headerBackTitle: "back",
-          }}
-        />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(index)" options={{ headerShown: false }} />
+        <Stack.Screen name="(account)" options={{ headerShown: false }} />
       </Stack>
     </RecoilRoot>
   );

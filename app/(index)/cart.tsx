@@ -41,7 +41,7 @@ const Cart = () => {
           </Text>
         </View>
         <View className="bg-blue-400 rounded flex items-center justify-center h-10">
-          <Link href="./Order">
+          <Link href="./order">
             <Text className="text-white">Proceed To Checkout</Text>
           </Link>
         </View>

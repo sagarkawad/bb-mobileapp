@@ -20,7 +20,7 @@ export default function Auth() {
     if (error) {
       Alert.alert(error.message);
     } else {
-      //   router.replace("./../app/tabs/index");
+      router.replace("./../app/(tabs)/index");
     }
 
     setLoading(false);
