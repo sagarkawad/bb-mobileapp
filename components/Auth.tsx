@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { supabase } from "../lib/supabase";
-import { useRouter } from "expo-router";
 import { Button, Input } from "@rneui/themed";
 
-export default function Auth() {
+export default function Auth({ router }: { router: any }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   async function signInWithEmail() {
     setLoading(true);
@@ -20,7 +18,7 @@ export default function Auth() {
     if (error) {
       Alert.alert(error.message);
     } else {
-      router.replace("./../app/(tabs)/index");
+      router.replace("/");
     }
 
     setLoading(false);
