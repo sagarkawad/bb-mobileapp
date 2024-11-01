@@ -4,11 +4,14 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRecoilValue } from "recoil";
 import { userData } from "@/atoms";
+import { useRouter } from "expo-router";
 
 const Order = () => {
   const [value, setValue] = useState("pod");
   const [address, setAddress] = useState("address1");
   const user = useRecoilValue(userData);
+  const router = useRouter();
+
   //session.id;
 
   const placeOrder = async () => {
@@ -21,6 +24,7 @@ const Order = () => {
       Alert.alert(error.message);
     } else {
       Alert.alert("Order successfully placed!");
+      router.push("/");
     }
   };
 
