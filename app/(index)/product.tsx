@@ -1,11 +1,11 @@
 import { View, Text, Image, Button, ScrollView, Alert } from "react-native";
 import { useLocalSearchParams, Link } from "expo-router";
 import { useRecoilState } from "recoil";
-import { cartData } from "@/atoms";
+import { cartDataState } from "@/atoms";
 
 const Product = () => {
   const { id, name, img, desc, price } = useLocalSearchParams();
-  const [cart, setCart] = useRecoilState(cartData);
+  const [cart, setCart] = useRecoilState(cartDataState);
   const handlePress = (
     passid: any,
     passname: any,

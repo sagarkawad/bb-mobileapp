@@ -14,12 +14,22 @@ interface UserItem {
   email: string | null;
 }
 
-export const cartData = atom<CartItem[]>({
+interface AddressItem {
+  id: string;
+  ad: string;
+}
+
+export const cartDataState = atom<CartItem[]>({
   key: "cartData",
   default: [],
 });
 
-export const userData = atom<UserItem>({
+export const userDataState = atom<UserItem>({
   key: "userData",
   default: { id: null, email: null },
+});
+
+export const AddressesState = atom<AddressItem[]>({
+  key: "Addresses",
+  default: [],
 });

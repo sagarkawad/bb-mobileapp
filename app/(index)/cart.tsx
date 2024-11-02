@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import { useRecoilValue } from "recoil";
-import { cartData } from "@/atoms";
+import { cartDataState } from "@/atoms";
 import CartComponent from "@/components/CartComponent";
 import { Link } from "expo-router";
 import { useState } from "react";
 
 const Cart = () => {
-  const cart = useRecoilValue(cartData);
+  const cart = useRecoilValue(cartDataState);
 
   return (
     <View className="flex justify-between p-4 h-full ">

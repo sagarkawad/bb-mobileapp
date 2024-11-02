@@ -5,14 +5,14 @@ import Auth from "@/components/Auth";
 // import Account from "./../../components/Account";
 import { View, Text } from "react-native";
 import { Session } from "@supabase/supabase-js";
-import { userData } from "@/atoms";
+import { userDataState } from "@/atoms";
 import { useRecoilState } from "recoil";
 import { Button } from "react-native";
 import { useRouter } from "expo-router";
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
-  const [user, setUser] = useRecoilState(userData);
+  const [user, setUser] = useRecoilState(userDataState);
   const router = useRouter();
 
   useEffect(() => {

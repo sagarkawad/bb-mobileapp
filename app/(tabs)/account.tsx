@@ -2,12 +2,12 @@ import { View, Text, Button, Alert } from "react-native";
 import { useRouter, Link } from "expo-router";
 import { supabase } from "@/lib/supabase";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { userData } from "@/atoms";
+import { userDataState } from "@/atoms";
 import { useEffect, useState } from "react";
 
 const Account = () => {
   const router = useRouter();
-  const [userDataSession, setUserDataSession] = useRecoilState(userData);
+  const [userDataSession, setUserDataSession] = useRecoilState(userDataState);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
