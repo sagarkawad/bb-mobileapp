@@ -1,46 +1,57 @@
 import React from "react";
 import { View, Text, TextInput, Button, FlatList } from "react-native";
-import { AddressesState } from "@/atoms";
+import { AddressesState, SelectedAddressState } from "@/atoms";
 import { useRecoilState } from "recoil";
 import { useState } from "react";
+import { RadioButton } from "react-native-paper";
 
 const Address = () => {
   const [address, setAddress] = useRecoilState(AddressesState);
-  const [userAddress, setUserAddress] = useState("");
+  const [selectedAddress, setSelectedAddress] =
+    useRecoilState(SelectedAddressState);
+  const [userInput, setUserInput] = useState("");
 
   return (
-    <View className="flex items-center justify-around bg-red-400 h-full">
+    <View className="flex  h-full justify-around p-4">
       <View>
         <TextInput
           placeholder="Type here..."
           className="text-2xl"
-          value={userAddress}
-          onChangeText={(newText) => setUserAddress(newText)}
+          value={userInput}
+          onChangeText={(newText) => setUserInput(newText)}
         />
-        <View className="mt-10">
+        <View className="mt-14">
           <Button
             title="Add"
             onPress={() => {
               setAddress((prevAddresses) => {
-                return [...prevAddresses, { id: userAddress, ad: userAddress }];
+                return [...prevAddresses, { id: userInput, ad: userInput }];
               });
-              setUserAddress("");
+              setUserInput("");
             }}
           />
         </View>
       </View>
-      <View className="flex bg-blue-400 justify-center items-center w-full">
+      <View>
         <Text className="text-2xl">Addresses</Text>
         {address ? (
-          <FlatList
-            data={address}
-            renderItem={({ item }) => (
-              <View>
-                <Text>{item.ad}</Text>
-              </View>
-            )}
-            keyExtractor={(item) => item.id}
-          />
+          <View>
+            <RadioButton.Group
+              onValueChange={(newValue) => setSelectedAddress(newValue)}
+              value={selectedAddress}
+            >
+              <FlatList
+                data={address}
+                renderItem={({ item }) => (
+                  <View style={{ flexDirection: "row", alignItems: "center" }}>
+                    <RadioButton value={item.ad} />
+                    <Text>{item.ad}</Text>
+                  </View>
+                )}
+                keyExtractor={(item) => item.id}
+              />
+            </RadioButton.Group>
+          </View>
         ) : (
           ""
         )}

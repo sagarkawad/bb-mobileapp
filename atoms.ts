@@ -33,3 +33,8 @@ export const AddressesState = atom<AddressItem[]>({
   key: "Addresses",
   default: [],
 });
+
+export const SelectedAddressState = atom({
+  key: "SelectedAddress",
+  default: "",
+});

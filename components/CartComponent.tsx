@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Image, Text } from "react-native";
-import { cartData } from "@/atoms";
+import { cartDataState } from "@/atoms";
 import { useRecoilState } from "recoil";
 import { Link } from "expo-router";
 
@@ -36,7 +36,7 @@ const CartComponent = ({
 };
 
 const QuantityComponent = ({ quan, id }: { quan: string; id: string }) => {
-  const [cart, setCart] = useRecoilState(cartData);
+  const [cart, setCart] = useRecoilState(cartDataState);
   const [quantity, setQuantity] = useState(Number(quan));
   const plus = (id: string) => {
     setCart((prevState) => {

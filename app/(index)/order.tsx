@@ -1,14 +1,16 @@
-import { View, Text, Button, Alert } from "react-native";
+import { View, Text, Button, Alert, FlatList } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { useRecoilValue } from "recoil";
-import { userDataState } from "@/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { AddressesState, SelectedAddressState, userDataState } from "@/atoms";
 import { useRouter } from "expo-router";
 
 const Order = () => {
   const [value, setValue] = useState("pod");
-  const [address, setAddress] = useState("address1");
+  const [address, setAddress] = useRecoilState(AddressesState);
+  const [selectedAddress, setSelectedAddress] =
+    useRecoilState(SelectedAddressState);
   const user = useRecoilValue(userDataState);
   const router = useRouter();
 
@@ -50,17 +52,19 @@ const Order = () => {
         <View>
           <Text className="text-3xl mb-4">Address</Text>
           <RadioButton.Group
-            onValueChange={(newValue) => setAddress(newValue)}
-            value={address}
+            onValueChange={(newValue) => setSelectedAddress(newValue)}
+            value={selectedAddress}
           >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <RadioButton value="address1" />
-              <Text>Nighoj</Text>
-            </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <RadioButton value="address2" />
-              <Text>Pune</Text>
-            </View>
+            <FlatList
+              data={address}
+              renderItem={({ item }) => (
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <RadioButton value={item.ad} />
+                  <Text>{item.ad}</Text>
+                </View>
+              )}
+              keyExtractor={(item) => item.id}
+            />
           </RadioButton.Group>
         </View>
       </View>
