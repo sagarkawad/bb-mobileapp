@@ -24,7 +24,7 @@ const Order = () => {
       Alert.alert(error.message);
     } else {
       Alert.alert("Order successfully placed!");
-      router.push("/");
+      router.replace("/");
     }
   };
 
