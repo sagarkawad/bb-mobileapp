@@ -1,9 +1,10 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import { useRecoilValue } from "recoil";
 import { cartDataState } from "@/atoms";
 import CartComponent from "@/components/CartComponent";
-import { Link } from "expo-router";
+import { router } from "expo-router";
 import { useState } from "react";
+import { Button } from "react-native-paper";
 
 const Cart = () => {
   const cart = useRecoilValue(cartDataState);
@@ -41,9 +42,17 @@ const Cart = () => {
           </Text>
         </View>
         <View className="bg-blue-400 rounded flex items-center justify-center h-10">
-          <Link href="./order">
-            <Text className="text-white">Proceed To Checkout</Text>
-          </Link>
+          <Button
+            onPress={() => {
+              if (cart.length != 0) {
+                router.push("./order");
+              } else {
+                Alert.alert("Cart Empty!");
+              }
+            }}
+          >
+            Proceed to Checkout
+          </Button>
         </View>
       </View>
     </View>

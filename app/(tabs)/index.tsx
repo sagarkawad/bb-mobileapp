@@ -4,9 +4,26 @@ import ProductCard from "@/components/ProductCard";
 import useWallpaper from "@/hooks/usePhotos";
 import usePhotos from "@/hooks/usePhotos";
 import { ThemedView } from "@/components/ThemedView";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userDataState } from "@/atoms";
+import { useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 const Index = () => {
   const data = usePhotos();
+  const [userDataSession, setUserDataSession] = useRecoilState(userDataState);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session && session.user.email) {
+        setUserDataSession({
+          id: session?.user.id,
+          email: session?.user.email,
+        });
+      }
+    });
+  }, []);
+
   return (
     <View>
       <ScrollView className="p-4">
@@ -23,11 +40,15 @@ const Index = () => {
           );
         })}
       </ScrollView>
-      <View className="absolute bottom-2 rounded-full w-14 h-14 flex items-center justify-center border left-2">
-        <Link href="./(index)/cart">
-          <Text className="text-3xl">🛒</Text>
-        </Link>
-      </View>
+      {userDataSession.id ? (
+        <View className="absolute bottom-2 left-4 rounded-full  w-16 h-16 flex items-center justify-center bg-red-200 shadow-md">
+          <Link href="./../(index)/cart">
+            <Text className="text-3xl">🛒</Text>
+          </Link>
+        </View>
+      ) : (
+        ""
+      )}
     </View>
   );
 };

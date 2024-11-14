@@ -27,7 +27,7 @@ const ProductCard = ({
         <View className="bg-blue-300 h-10 w-36 rounded flex items-center justify-center">
           <Link
             href={{
-              pathname: "./(index)/product",
+              pathname: "./../(index)/product",
               params: { id, name, img, desc, price },
             }}
           >

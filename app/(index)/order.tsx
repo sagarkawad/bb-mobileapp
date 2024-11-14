@@ -3,8 +3,14 @@ import { RadioButton } from "react-native-paper";
 import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { AddressesState, SelectedAddressState, userDataState } from "@/atoms";
+import {
+  AddressesState,
+  SelectedAddressState,
+  userDataState,
+  cartDataState,
+} from "@/atoms";
 import { useRouter } from "expo-router";
+import Product from "./product";
 
 const Order = () => {
   const [value, setValue] = useState("pod");
@@ -12,14 +18,25 @@ const Order = () => {
   const [selectedAddress, setSelectedAddress] =
     useRecoilState(SelectedAddressState);
   const user = useRecoilValue(userDataState);
+  const cart = useRecoilValue(cartDataState);
   const router = useRouter();
 
   //session.id;
+  //{ user_id: user.id, address: address }
 
   const placeOrder = async () => {
     const { data, error } = await supabase
       .from("orders")
-      .insert([{ user_id: user.id, address: address }])
+      .insert(
+        cart.map((el) => {
+          return {
+            user_id: user.id,
+            address: selectedAddress,
+            product: el.id,
+            quantity: el.quan,
+          };
+        })
+      )
       .select();
 
     if (error) {

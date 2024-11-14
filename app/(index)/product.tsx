@@ -1,11 +1,14 @@
-import { View, Text, Image, Button, ScrollView, Alert } from "react-native";
-import { useLocalSearchParams, Link } from "expo-router";
-import { useRecoilState } from "recoil";
-import { cartDataState } from "@/atoms";
+import { View, Text, Image, ScrollView, Alert } from "react-native";
+import { useLocalSearchParams, router } from "expo-router";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { cartDataState, userDataState } from "@/atoms";
+import { Button } from "react-native-paper";
 
 const Product = () => {
   const { id, name, img, desc, price } = useLocalSearchParams();
   const [cart, setCart] = useRecoilState(cartDataState);
+  const userDataSession = useRecoilValue(userDataState);
+
   const handlePress = (
     passid: any,
     passname: any,
@@ -53,17 +56,34 @@ const Product = () => {
 
       <View className="flex flex-row justify-between items-center">
         <View className="flex bg-blue-500 h-10 w-40 justify-center items-center rounded">
-          <Link href="./cart">
-            <Text className="text-white">Go to Cart!</Text>
-          </Link>
+          <Button
+            onPress={() => {
+              if (userDataSession.id != null) {
+                router.push("./cart");
+              } else {
+                Alert.alert("Login to Continue!");
+                router.push("./../(account)/signin");
+              }
+            }}
+            className="text-white"
+          >
+            Go to Cart!
+          </Button>
         </View>
         <View className="flex bg-blue-500 h-10 w-40 justify-center items-center rounded">
-          <Text
+          <Button
             className="text-white"
-            onPress={() => handlePress(id, name, img, desc, price)}
+            onPress={() => {
+              if (userDataSession.id != null) {
+                handlePress(id, name, img, desc, price);
+              } else {
+                Alert.alert("Login to Continue!");
+                router.push("./../(account)/signin");
+              }
+            }}
           >
             Add to Cart!
-          </Text>
+          </Button>
         </View>
       </View>
     </View>
