@@ -29,12 +29,12 @@ export const userDataState = atom<UserItem>({
   default: { id: null, email: null },
 });
 
-export const AddressesState = atom<AddressItem[]>({
-  key: "Addresses",
+export const addressesState = atom<AddressItem[]>({
+  key: "addresses",
   default: [],
 });
 
-export const SelectedAddressState = atom({
-  key: "SelectedAddress",
+export const selectedAddressState = atom({
+  key: "selectedAddress",
   default: "",
 });

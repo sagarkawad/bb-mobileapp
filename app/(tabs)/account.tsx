@@ -42,16 +42,20 @@ const Account = () => {
         <Text>Loading...</Text>
       ) : (
         <>
-          <Link href="./../(account)/address" className="mb-10">
-            <View className="h-16 border-b flex flex-row items-center justify-between mb-10">
-              <View>
-                <Text className="text-2xl">Addresses</Text>
+          {userDataSession.id ? (
+            <Link href="./../(account)/address" className="mb-10">
+              <View className="h-16 border-b flex flex-row items-center justify-between mb-10">
+                <View>
+                  <Text className="text-2xl">Addresses</Text>
+                </View>
+                <View>
+                  <Text>{">"}</Text>
+                </View>
               </View>
-              <View>
-                <Text>{">"}</Text>
-              </View>
-            </View>
-          </Link>
+            </Link>
+          ) : (
+            ""
+          )}
 
           {userDataSession.id ? (
             <Text>You are signed in as: {userDataSession.email}</Text>

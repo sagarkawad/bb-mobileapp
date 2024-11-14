@@ -4,19 +4,18 @@ import { useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  AddressesState,
-  SelectedAddressState,
+  addressesState,
+  selectedAddressState,
   userDataState,
   cartDataState,
 } from "@/atoms";
 import { useRouter } from "expo-router";
-import Product from "./product";
 
 const Order = () => {
   const [value, setValue] = useState("pod");
-  const [address, setAddress] = useRecoilState(AddressesState);
+  const [address, setAddress] = useRecoilState(addressesState);
   const [selectedAddress, setSelectedAddress] =
-    useRecoilState(SelectedAddressState);
+    useRecoilState(selectedAddressState);
   const user = useRecoilValue(userDataState);
   const cart = useRecoilValue(cartDataState);
   const router = useRouter();
