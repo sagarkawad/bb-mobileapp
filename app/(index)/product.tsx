@@ -3,13 +3,14 @@ import { useLocalSearchParams, router } from "expo-router";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { cartDataState, userDataState } from "@/atoms";
 import { Button } from "react-native-paper";
+import { supabase } from "@/lib/supabase";
 
 const Product = () => {
   const { id, name, img, desc, price } = useLocalSearchParams();
   const [cart, setCart] = useRecoilState(cartDataState);
   const userDataSession = useRecoilValue(userDataState);
 
-  const handlePress = (
+  const handlePress = async (
     passid: any,
     passname: any,
     passimg: any,
@@ -17,6 +18,24 @@ const Product = () => {
     passprice: any
   ) => {
     let duplicate = false;
+
+    const updateDataDB = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("cart")
+          .insert([
+            { quantity: 1, user_id: userDataSession.id, product_id: passid },
+          ])
+          .select();
+        if (error) {
+          Alert.alert(error.message);
+        }
+        console.log(data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
     setCart((prevState) => {
       prevState.map((el) => {
         if (el.id === passid) {
@@ -28,6 +47,7 @@ const Product = () => {
         return [...prevState];
       } else {
         Alert.alert("Item added successfully!");
+        updateDataDB();
         return [
           ...prevState,
           {
@@ -43,6 +63,7 @@ const Product = () => {
     });
     console.log(`${passid} ${passname} ${passimg} ${passdesc} ${passprice}`);
   };
+
   return (
     <View className="flex p-4 flex-col  h-full justify-between">
       <View>

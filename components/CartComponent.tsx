@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { View, Image, Text } from "react-native";
-import { cartDataState } from "@/atoms";
-import { useRecoilState } from "recoil";
-import { Link } from "expo-router";
+import React, { useState, useEffect } from "react";
+import { View, Image, Text, Alert } from "react-native";
+import { cartDataState, userDataState } from "@/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { supabase } from "@/lib/supabase";
 
 const CartComponent = ({
   img,
@@ -38,6 +38,8 @@ const CartComponent = ({
 const QuantityComponent = ({ quan, id }: { quan: string; id: string }) => {
   const [cart, setCart] = useRecoilState(cartDataState);
   const [quantity, setQuantity] = useState(Number(quan));
+  const userSession = useRecoilValue(userDataState);
+
   const plus = (id: string) => {
     setCart((prevState) => {
       return prevState.map((item) => {

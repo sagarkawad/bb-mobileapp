@@ -1,13 +1,47 @@
 import { View, Text, Alert } from "react-native";
-import { useRecoilValue } from "recoil";
-import { cartDataState } from "@/atoms";
+import { useRecoilValue, useRecoilState } from "recoil";
+import { cartDataState, userDataState } from "@/atoms";
 import CartComponent from "@/components/CartComponent";
 import { router } from "expo-router";
-import { useState } from "react";
 import { Button } from "react-native-paper";
+import { useEffect } from "react";
+import { supabase } from "@/lib/supabase";
 
 const Cart = () => {
-  const cart = useRecoilValue(cartDataState);
+  const [cart, setCart] = useRecoilState(cartDataState);
+  const userSession = useRecoilValue(userDataState);
+
+  useEffect(() => {
+    async function getFromDB() {
+      try {
+        const { data, error } = await supabase
+          .from("cart")
+          .select("id, quantity, product!product_id(name, price, img, desc)")
+          .eq("user_id", userSession.id);
+        if (error) {
+          Alert.alert(error.message);
+        }
+        console.log(data);
+        setCart(
+          //@ts-ignore
+          data?.map((el) => {
+            return {
+              id: el.id,
+              name: el.product.name,
+              price: el.product.price,
+              desc: el.product.desc,
+              img: el.product.img,
+              quan: el.quantity,
+            };
+          })
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    getFromDB();
+  }, []);
 
   return (
     <View className="flex justify-between p-4 h-full ">

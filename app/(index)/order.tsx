@@ -24,6 +24,13 @@ const Order = () => {
   //{ user_id: user.id, address: address }
 
   const placeOrder = async () => {
+    if (value === "pp") {
+      Alert.alert("Razorpay currently is in development phase!");
+      return;
+    } else if (selectedAddress === "") {
+      Alert.alert("Address not selected!");
+      return;
+    }
     const { data, error } = await supabase
       .from("orders")
       .insert(
