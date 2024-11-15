@@ -47,6 +47,20 @@ const QuantityComponent = ({ quan, id }: { quan: string; id: string }) => {
           setQuantity((prevQuantity) => prevQuantity + 1);
           console.log(item);
           console.log(item.quan);
+
+          const updateDbPlus = async () => {
+            const { data, error } = await supabase
+              .from("cart")
+              .update({ quantity: item.quan + 1 })
+              .eq("user_id", userSession.id)
+              .select();
+            if (error) {
+              Alert.alert(error.message);
+              return item;
+            }
+          };
+          updateDbPlus();
+
           return { ...item, quan: item.quan + 1 }; // Update quantity
         }
         return item; // Keep other items unchanged
@@ -59,6 +73,18 @@ const QuantityComponent = ({ quan, id }: { quan: string; id: string }) => {
       return prevCart.map((item) => {
         if (item.id === id && item.quan > 1) {
           setQuantity((prevQuantity) => prevQuantity - 1);
+          const updateDbMinus = async () => {
+            const { data, error } = await supabase
+              .from("cart")
+              .update({ quantity: item.quan - 1 })
+              .eq("user_id", userSession.id)
+              .select();
+            if (error) {
+              Alert.alert(error.message);
+              return item;
+            }
+          };
+          updateDbMinus();
           return { ...item, quan: item.quan - 1 }; // Update quantity
         }
         return item; // Keep other items unchanged
