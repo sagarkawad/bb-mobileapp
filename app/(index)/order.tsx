@@ -14,10 +14,11 @@ import { useRouter } from "expo-router";
 const Order = () => {
   const [value, setValue] = useState("pod");
   const [address, setAddress] = useRecoilState(addressesState);
+
   const [selectedAddress, setSelectedAddress] =
     useRecoilState(selectedAddressState);
   const user = useRecoilValue(userDataState);
-  const cart = useRecoilValue(cartDataState);
+  const [cart, setCart] = useRecoilState(cartDataState);
   const router = useRouter();
 
   //session.id;
@@ -49,6 +50,15 @@ const Order = () => {
       Alert.alert(error.message);
     } else {
       Alert.alert("Order successfully placed!");
+      const { error: cartError } = await supabase
+        .from("cart")
+        .delete()
+        .eq("user_id", user.id);
+      if (cartError) {
+        Alert.alert(cartError.message);
+        return;
+      }
+      setCart([]);
       router.replace("/");
     }
   };

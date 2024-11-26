@@ -4,6 +4,17 @@ import { cartDataState, userDataState } from "@/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { supabase } from "@/lib/supabase";
 
+interface CartItem {
+  id: string;
+  quan: number;
+  user_id: string;
+  name: string;
+  price: string;
+  desc: string;
+  img: string;
+  quantity?: number;
+}
+
 const CartComponent = ({
   img,
   price,
@@ -70,25 +81,41 @@ const QuantityComponent = ({ quan, id }: { quan: string; id: string }) => {
 
   const minus = (id: string) => {
     setCart((prevCart) => {
-      return prevCart.map((item) => {
-        if (item.id === id && item.quan > 1) {
-          setQuantity((prevQuantity) => prevQuantity - 1);
-          const updateDbMinus = async () => {
-            const { data, error } = await supabase
-              .from("cart")
-              .update({ quantity: item.quan - 1 })
-              .eq("user_id", userSession.id)
-              .select();
-            if (error) {
-              Alert.alert(error.message);
-              return item;
-            }
-          };
-          updateDbMinus();
-          return { ...item, quan: item.quan - 1 }; // Update quantity
-        }
-        return item; // Keep other items unchanged
-      });
+      return prevCart
+        .map((item) => {
+          if (item.id === id && item.quan > 1) {
+            setQuantity((prevQuantity) => prevQuantity - 1);
+            const updateDbMinus = async () => {
+              const { data, error } = await supabase
+                .from("cart")
+                .update({ quantity: item.quan - 1 })
+                .eq("user_id", userSession.id)
+                .select();
+              if (error) {
+                Alert.alert(error.message);
+                return item;
+              }
+            };
+            updateDbMinus();
+            return { ...item, quan: item.quan - 1 }; // Update quantity
+          } else if (item.id === id && item.quan === 1) {
+            const removeFromDb = async () => {
+              const { data, error } = await supabase
+                .from("cart")
+                .delete()
+                .eq("user_id", userSession.id)
+                .eq("id", item.id);
+              if (error) {
+                Alert.alert(error.message);
+                return;
+              }
+            };
+            removeFromDb();
+            return null; // This item will be filtered out
+          }
+          return item; // Keep other items unchanged
+        })
+        .filter(Boolean); // Remove null values from the array
     });
   };
 
