@@ -7,6 +7,19 @@ import { Button } from "react-native-paper";
 import { useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 
+interface ProductSchema {
+  desc: string,
+  name: string,
+  img: string,
+  price: string,
+}
+
+interface DataSchema {
+  quantity: number,
+  id: string,
+  product: ProductSchema
+}
+
 const Cart = () => {
   const [cart, setCart] = useRecoilState(cartDataState);
   const userSession = useRecoilValue(userDataState);
@@ -17,14 +30,17 @@ const Cart = () => {
         const { data, error } = await supabase
           .from("cart")
           .select("id, quantity, product!product_id(name, price, img, desc)")
-          .eq("user_id", userSession.id);
+          .eq("user_id", userSession.id) as {
+            data: DataSchema[] | null,
+            error: any
+          };
         if (error) {
           Alert.alert(error.message);
         }
         console.log(data);
+        if (data) {
         setCart(
-          //@ts-ignore
-          data?.map((el) => {
+          data.map((el: DataSchema) => {
             return {
               id: el.id,
               name: el.product.name,
@@ -34,7 +50,11 @@ const Cart = () => {
               quan: el.quantity,
             };
           })
+        
         );
+      } else {
+        setCart([])
+      }
       } catch (e) {
         console.log(e);
       }
