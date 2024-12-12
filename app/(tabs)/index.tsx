@@ -65,14 +65,17 @@ const Index = () => {
               .select(
                 "id, quantity, product!product_id (name, price, img, desc, id)"
               )
-              .eq("user_id", session?.user.id);
+              .eq("user_id", session?.user.id) as {
+                data: DataSchema[] | null,
+                error: any
+              };
             if (error) {
               Alert.alert(error.message);
             }
             console.log(data);
             if (data) {
             setCart(
-              data.map((el: any) => {
+              data.map((el: DataSchema) => {
                 return {
                   id: el.product.id,
                   name: el.product.name,
