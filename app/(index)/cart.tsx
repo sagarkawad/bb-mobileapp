@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 
 interface ProductSchema {
+  id: string,
   desc: string,
   name: string,
   img: string,
@@ -16,7 +17,6 @@ interface ProductSchema {
 
 interface DataSchema {
   quantity: number,
-  id: string,
   product: ProductSchema
 }
 
@@ -29,7 +29,7 @@ const Cart = () => {
       try {
         const { data, error } = await supabase
           .from("cart")
-          .select("id, quantity, product!product_id(name, price, img, desc)")
+          .select("id, quantity, product!product_id(name, price, img, desc, id)")
           .eq("user_id", userSession.id) as {
             data: DataSchema[] | null,
             error: any
@@ -42,7 +42,7 @@ const Cart = () => {
         setCart(
           data.map((el: DataSchema) => {
             return {
-              id: el.id,
+              id: el.product.id,
               name: el.product.name,
               price: el.product.price,
               desc: el.product.desc,
