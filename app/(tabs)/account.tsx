@@ -58,7 +58,9 @@ const Account = () => {
           )}
 
           {userDataSession.id ? (
-            <Text>You are signed in as: {userDataSession.email}</Text>
+            <View className="mb-4 flex items-center">
+            <Text className="text-xl">You are signed in as: {userDataSession.email}</Text>
+            </View>
           ) : (
             ""
           )}

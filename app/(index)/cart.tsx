@@ -87,8 +87,8 @@ const Cart = () => {
           )}
       </View>
       <View>
-        <View>
-          <Text>
+        <View className="border rounded mb-2 p-4 flex">
+          <Text className="text-2xl">
             Total = Rs.{" "}
             {cart.reduce((sum, el) => {
               return sum + Number(el.price) * el.quan;
