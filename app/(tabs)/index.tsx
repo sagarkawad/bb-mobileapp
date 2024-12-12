@@ -10,6 +10,19 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { Button } from "react-native-paper";
 
+interface ProductSchema {
+  id: string, 
+  desc: string,
+  name: string,
+  img: string,
+  price: string,
+}
+
+interface DataSchema {
+  quantity: number
+  product: ProductSchema
+}
+
 const Index = () => {
   const [data, setData] = useState([]);
   const [userDataSession, setUserDataSession] = useRecoilState(userDataState);
@@ -50,16 +63,16 @@ const Index = () => {
             const { data, error } = await supabase
               .from("cart")
               .select(
-                "id, quantity, product!product_id(name, price, img, desc, id)"
+                "id, quantity, product!product_id (name, price, img, desc, id)"
               )
               .eq("user_id", session?.user.id);
             if (error) {
               Alert.alert(error.message);
             }
             console.log(data);
+            if (data) {
             setCart(
-              //@ts-ignore
-              data?.map((el) => {
+              data.map((el: any) => {
                 return {
                   id: el.product.id,
                   name: el.product.name,
@@ -69,7 +82,10 @@ const Index = () => {
                   quan: el.quantity,
                 };
               })
-            );
+            )
+          } else {
+            setCart([])
+          };
           } catch (e) {
             console.log(e);
           }
@@ -98,7 +114,7 @@ const Index = () => {
   return (
     <View className="h-full">
       <ScrollView className="p-4">
-        {data.map((el) => {
+        {data.map((el: {name: string, img: string, id: string, desc: string, price: string}) => {
           return (
             <ProductCard
               name={el.name}

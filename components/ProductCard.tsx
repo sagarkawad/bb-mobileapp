@@ -1,5 +1,6 @@
-import { Link } from "expo-router";
-import { View, Text, Image, Button } from "react-native";
+import { useRouter, Link } from "expo-router";
+import { View, Text, Image } from "react-native";
+import { Button } from "react-native-paper";
 
 const ProductCard = ({
   name,
@@ -14,6 +15,16 @@ const ProductCard = ({
   desc: string;
   price: string;
 }) => {
+
+  const router = useRouter();
+
+  function jumpToProduct () {
+    router.push({
+      pathname: "./../(index)/product",
+      params: { id, name, img, desc, price }
+    });
+  }
+
   return (
     <View className=" p-4 mb-4 w-full rounded border-b border-blue-500">
       <Text className=" mb-2 text-bold text-2xl">{name}</Text>
@@ -31,7 +42,7 @@ const ProductCard = ({
               params: { id, name, img, desc, price },
             }}
           >
-            <Text className="text-white">Check Out ▶️</Text>
+            <Button className="text-white">Check Out ▶️</Button>
           </Link>
         </View>
       </View>
