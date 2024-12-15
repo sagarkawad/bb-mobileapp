@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { supabase } from "../lib/supabase";
-import { Button, Input } from "@rneui/themed";
+import {  Input } from "@rneui/themed";
+import { Button } from "react-native-paper";
 
 export default function Auth({ router }: { router: any }) {
   const [email, setEmail] = useState("");
@@ -95,18 +96,18 @@ export default function Auth({ router }: { router: any }) {
         />
       </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title="Sign in"
-          disabled={loading}
-          onPress={() => signInWithEmail()}
-        />
+        
+        <Button mode="contained" onPress={() => signUpWithEmail()} style={styles.checkoutButton}
+          labelStyle={styles.buttonText}>
+          Sign Up
+          </Button>
       </View>
       <View style={styles.verticallySpaced}>
-        <Button
-          title="Sign up"
-          disabled={loading}
-          onPress={() => signUpWithEmail()}
-        />
+       
+        <Button mode="contained" onPress={() => signInWithEmail()} style={styles.checkoutButton}
+          labelStyle={styles.buttonText}>
+          Sign In
+          </Button>
       </View>
     </View>
   );
@@ -121,8 +122,18 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     paddingBottom: 4,
     alignSelf: "stretch",
+    marginTop: 4,
   },
   mt20: {
     marginTop: 20,
   },
+  checkoutButton: {
+    backgroundColor: '#6200EE',
+    borderRadius: 8,
+    paddingVertical: 10,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: '#FFFFFF',
+  }
 });
