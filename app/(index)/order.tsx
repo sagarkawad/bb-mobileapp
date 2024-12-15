@@ -34,8 +34,9 @@ const Order = () => {
           return {
             user_id: user.id,
             address: selectedAddress,
-            product: el.id,
+            product_id: el.id,
             quantity: el.quan,
+            total_price: el.quan * Number(el.price),
           };
         })
       )
