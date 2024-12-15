@@ -37,8 +37,8 @@ export default function Auth({ router }: { router: any }) {
       options: {
         data: {
           email,
-          first_name: "jon",
-          age: "18",
+          first_name: name,
+          age: age,
         },
       },
     });
