@@ -113,7 +113,7 @@ const Index = () => {
               style={styles.productCard} 
               onPress={() => navigateToProduct(el)}
             >
-              <Image source={{ uri: el.img }} style={styles.productImage} />
+              <Image source={{ uri: el.img?.link1 }} style={styles.productImage} />
               <Text style={styles.productName}>{el.name}</Text>
               <Text style={styles.productPrice}>Rs.{el.price}</Text>
             </TouchableOpacity>

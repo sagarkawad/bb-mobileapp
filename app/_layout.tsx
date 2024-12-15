@@ -2,6 +2,7 @@ import { Stack } from "expo-router/stack";
 import { RecoilRoot } from "recoil";
 import "../global.css";
 
+
 export default function Layout() {
   return (
     <RecoilRoot>

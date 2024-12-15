@@ -1,16 +1,21 @@
-import { View, Text, Image, ScrollView, Alert, StyleSheet } from "react-native";
+import { View, Text, ScrollView, Alert, StyleSheet, Dimensions, Image, useWindowDimensions } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { cartDataState, userDataState } from "@/atoms";
 import { Button } from "react-native-paper";
 import { useState } from 'react';
 import { supabase } from "@/lib/supabase";
+import Carousel from 'react-native-reanimated-carousel';
+import RenderHtml from 'react-native-render-html';
 
 const Product = () => {
   const { id, name, img, desc, price } = useLocalSearchParams();
   const [cart, setCart] = useRecoilState(cartDataState);
   const userDataSession = useRecoilValue(userDataState);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  
+  
+  
 
   const handlePress = async (passid, passname, passimg, passdesc, passprice) => {
     let duplicate = false;
@@ -21,7 +26,7 @@ const Product = () => {
           .from("cart")
           .insert([{ quantity: 1, user_id: userDataSession.id, product_id: passid }])
           .select();
-          Alert.alert("Item added successfully!");
+        Alert.alert("Item added successfully!");
         if (error) {
           Alert.alert(error.message);
         }
@@ -30,10 +35,8 @@ const Product = () => {
       }
     };
 
-
     setCart((prevState) => {
       prevState.map((el) => {
-        console.log(el.id, passid)
         if (el.id === passid) {
           duplicate = true;
         }
@@ -58,14 +61,25 @@ const Product = () => {
     });
   };
 
+
+
   return (
     <ScrollView style={styles.container}>
-      <Image source={{ uri: img }} style={styles.productImage} />
-      <View style={styles.productInfoContainer}>
+      <Carousel
+        width={Dimensions.get('window').width}
+        height={300}
+        data={[img?.link1, img?.link2]}
+        renderItem={({ item }) => (
+          <View style={styles.carouselItem}>
+            <Image source={{ uri: item }} style={styles.productImage} />
+          </View>
+        )}
+      />
+      <ScrollView style={styles.productInfoContainer} nestedScrollEnabled={true}>
         <Text style={styles.productName}>{name}</Text>
         <Text style={styles.productPrice}>Rs.{price}</Text>
         <Text style={styles.productDescription}>{desc}</Text>
-      </View>
+      </ScrollView>
       <View style={styles.buttonContainer}>
         <Button 
           mode="contained" 
@@ -108,6 +122,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f5f5f5',
   },
+  carouselItem: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   productImage: {
     width: '100%',
     height: 300,
@@ -116,6 +134,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
   },
   productInfoContainer: {
+    maxHeight: 430,
     padding: 16,
     backgroundColor: '#ffffff',
     borderRadius: 16,
@@ -139,7 +158,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
     lineHeight: 22,
-    marginBottom: 16,
   },
   buttonContainer: {
     flexDirection: 'row',
