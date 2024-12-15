@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, FlatList, Alert } from "react-native";
+import { View, Text, ScrollView, FlatList, Alert, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { router } from "expo-router";
 import ProductCard from "@/components/ProductCard";
 import useWallpaper from "@/hooks/usePhotos";
@@ -45,15 +45,11 @@ const Index = () => {
             .eq("user_id", session?.user.id);
           if (error) {
             Alert.alert(error.message);
-          } else if (data.length != 0) {
+          } else if (data.length !== 0) {
             setAddress(
-              data.map((el) => {
-                //@ts-ignore
-                return { id: el.id, ad: el.address };
-              })
+              data.map((el) => ({ id: el.id, ad: el.address }))
             );
           }
-          console.log(data);
         } catch (e) {
           console.log(e);
         }
@@ -67,28 +63,25 @@ const Index = () => {
               )
               .eq("user_id", session?.user.id) as {
                 data: DataSchema[] | null,
-                error: any
+                error: any,
               };
             if (error) {
               Alert.alert(error.message);
             }
-            console.log(data);
             if (data) {
-            setCart(
-              data.map((el: DataSchema) => {
-                return {
+              setCart(
+                data.map((el: DataSchema) => ({
                   id: el.product.id,
                   name: el.product.name,
                   price: el.product.price,
                   desc: el.product.desc,
                   img: el.product.img,
                   quan: el.quantity,
-                };
-              })
-            )
-          } else {
-            setCart([])
-          };
+                }))
+              );
+            } else {
+              setCart([]);
+            }
           } catch (e) {
             console.log(e);
           }
@@ -100,49 +93,100 @@ const Index = () => {
 
     const getData = async () => {
       const data = await usePhotos();
-      //@ts-ignore
       setData(data);
-      console.log(data);
     };
     getData();
-
-    console.log("cart", cart);
   }, []);
 
-  function showCart() {
-    console.log("cart from function = ", cart);
-    router.push("./../(index)/cart");
+  function navigateToProduct(product) {
+    router.push({ pathname: "./../(index)/product", params: product });
   }
 
   return (
-    <View className="h-full">
-      <ScrollView className="p-4">
-        {data.map((el: {name: string, img: string, id: string, desc: string, price: string}) => {
-          return (
-            <ProductCard
-              name={el.name}
-              img={el.img}
-              id={el.id}
-              desc={el.desc}
-              price={el.price}
-              key={el.id}
-            />
-          );
-        })}
+    <View style={styles.container}>
+      <Text style={styles.header}>Welcome to Our Store</Text>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.productGrid}>
+          {data.map((el: ProductSchema) => (
+            <TouchableOpacity 
+              key={el.id} 
+              style={styles.productCard} 
+              onPress={() => navigateToProduct(el)}
+            >
+              <Image source={{ uri: el.img }} style={styles.productImage} />
+              <Text style={styles.productName}>{el.name}</Text>
+              <Text style={styles.productPrice}>Rs.{el.price}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </ScrollView>
-      {userDataSession.id ? (
-        <View className="absolute bottom-2 left-4 rounded-full  w-16 h-16 flex items-center justify-center bg-red-200 shadow-md">
-          {/* <Link href="./../(index)/cart"> */}
-          <Button onPress={showCart} className="text-3xl">
+      {userDataSession.id && (
+        <View style={styles.cartButtonContainer}>
+          <Button onPress={() => router.push("./../(index)/cart")} style={styles.cartButtonText}>
             🛒
           </Button>
-          {/* </Link> */}
         </View>
-      ) : (
-        ""
       )}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 16,
+  },
+  scrollView: {
+    paddingHorizontal: 16,
+  },
+  productGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  productCard: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    width: '48%',
+    marginBottom: 16,
+    overflow: 'hidden',
+    elevation: 3,
+  },
+  productImage: {
+    width: '100%',
+    height: 150,
+  },
+  productName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    padding: 8,
+  },
+  productPrice: {
+    fontSize: 14,
+    color: '#888',
+    paddingHorizontal: 8,
+    paddingBottom: 8,
+  },
+  cartButtonContainer: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: '#6200EE',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cartButtonText: {
+    fontSize: 24,
+  },
+});
 
 export default Index;
