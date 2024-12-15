@@ -5,6 +5,8 @@ import { Button, Input } from "@rneui/themed";
 
 export default function Auth({ router }: { router: any }) {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("")
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -35,6 +37,8 @@ export default function Auth({ router }: { router: any }) {
       options: {
         data: {
           email,
+          first_name: "jon",
+          age: "18",
         },
       },
     });
@@ -49,6 +53,26 @@ export default function Auth({ router }: { router: any }) {
 
   return (
     <View style={styles.container}>
+      <View style={[styles.verticallySpaced, styles.mt20]}>
+        <Input
+          label="Name"
+          leftIcon={{ type: "font-awesome", name: "user" }}
+          onChangeText={(text) => setName(text)}
+          value={name}
+          placeholder="Username"
+          autoCapitalize={"none"}
+        />
+      </View>
+      <View style={[styles.verticallySpaced, styles.mt20]}>
+        <Input
+          label="Age"
+          leftIcon={{ type: "font-awesome", name: "calendar" }}
+          onChangeText={(text) => setAge(text)}
+          value={age}
+          placeholder="Age"
+          autoCapitalize={"none"}
+        />
+      </View>
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Input
           label="Email"
