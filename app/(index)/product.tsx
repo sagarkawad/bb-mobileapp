@@ -13,7 +13,7 @@ const Product = () => {
   const [cart, setCart] = useRecoilState(cartDataState);
   const userDataSession = useRecoilValue(userDataState);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
-  
+  const pics = img.split(",");
   
   
 
@@ -62,13 +62,15 @@ const Product = () => {
   };
 
 
+  //console.log(productimg)
+
 
   return (
     <ScrollView style={styles.container}>
       <Carousel
         width={Dimensions.get('window').width}
         height={300}
-        data={[img?.link1, img?.link2]}
+        data={pics}
         renderItem={({ item }) => (
           <View style={styles.carouselItem}>
             <Image source={{ uri: item }} style={styles.productImage} />
@@ -78,7 +80,7 @@ const Product = () => {
       <ScrollView style={styles.productInfoContainer} nestedScrollEnabled={true}>
         <Text style={styles.productName}>{name}</Text>
         <Text style={styles.productPrice}>Rs.{price}</Text>
-        <Text style={styles.productDescription}>{desc}</Text>
+        <Text style={styles.productDescription}>{desc}</Text>   
       </ScrollView>
       <View style={styles.buttonContainer}>
         <Button 
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: 16,
     marginHorizontal: 16,
-    marginTop: -20,
+    marginTop: 4,
     elevation: 3,
   },
   productName: {
@@ -158,12 +160,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
     lineHeight: 22,
+    marginBottom: 26,
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 16,
-    marginTop: 16,
   },
   cartButton: {
     flex: 1,

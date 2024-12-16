@@ -99,7 +99,7 @@ const Index = () => {
   }, []);
 
   function navigateToProduct(product) {
-    router.push({ pathname: "./../(index)/product", params: product });
+    router.push({ pathname: "./../(index)/product", params: {...product, img: Object.values(product.img)} });
   }
 
   return (
