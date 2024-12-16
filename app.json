@@ -16,6 +16,9 @@
       "supportsTablet": true
     },
     "android": {
+      "enableProguardInReleaseBuilds": true,
+      "useNextNotificationsApi": true,
+      "enableHermes": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
