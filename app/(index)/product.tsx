@@ -29,6 +29,7 @@ const Product = () => {
         Alert.alert("Item added successfully!");
         if (error) {
           Alert.alert(error.message);
+          console.log(error.message)
         }
       } catch (e) {
         console.log(e);
@@ -104,7 +105,7 @@ const Product = () => {
           onPress={() => {
             if (userDataSession.id != null) {
               setIsAddingToCart(true);
-              handlePress(id, name, img, desc, price);
+              handlePress(id, name, pics[0], desc, price);
               setIsAddingToCart(false);
             } else {
               Alert.alert("Login to Continue!");
